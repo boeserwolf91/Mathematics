@@ -3,12 +3,31 @@ package mathematics;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Complex {
-	public static char complexUnit = 'i';
+public class Complex 
+{
+	private static char complexUnit = 'i';
 	
 	private double real;
 	private double imaginary;
 	
+        /**
+         * This method changes the complex unit.
+         * Default is 'i'
+         * @param unit
+         * @throws IllegalArgumentException if the unit is not a letter from a to z
+         */
+        public static void setComplexUnit(char unit) throws IllegalArgumentException
+        {
+            if(String.valueOf(unit).matches("[a-z]"))
+            {
+                complexUnit = unit;
+            }
+            else 
+            {
+                throw new IllegalArgumentException("wrong complexUnit - it's just a number from a to z permitted. you want " + unit);
+            }
+        }
+        
 	public static Complex getConjugateComplexValue(Complex complex)
 	{
 		return new Complex(complex.real, complex.imaginary * -1);
@@ -73,7 +92,7 @@ public class Complex {
 
 	public Complex(String string) throws IllegalArgumentException
 	{
-		Pattern reg = Pattern.compile("([+-]?\\d+\\.?\\d*)?(([+-])?i(\\d+\\.?\\d*)?)?");
+		Pattern reg = Pattern.compile("([+-]?\\d+\\.?\\d*)?(([+-])?[a-z](\\d+\\.?\\d*)?)?");
 		Matcher m = reg.matcher(string);
 		if(m.matches() && string.length() > 0)
 		{
